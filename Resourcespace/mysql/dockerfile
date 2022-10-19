@@ -1,0 +1,16 @@
+FROM mysql
+
+ENV MYSQL_ROOT_PASSWORD=+TopS3cret!forF4en
+ENV MYSQLX_TCP_PORT=3306
+ENV character-set-server=utf8mb4
+ENV collation-server=utf8mb4_unicode_ci
+#ENV /my/custom=./conf.d
+ENV host_cache_size=0 
+COPY 01createdb.sql /docker-entrypoint-initdb.d
+COPY 02createuser-rw.sql /docker-entrypoint-initdb.d
+COPY 03grant.sql /docker-entrypoint-initdb.d
+
+EXPOSE 3306
+
+#RUN mysql -u root -password +TopS3cret!forF4en <  /var/www/createdb.sql
+#RUN mysql -u root -password +TopS3cret!forF4en <  /var/www/createusers.sql

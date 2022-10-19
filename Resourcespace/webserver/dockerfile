@@ -1,0 +1,63 @@
+FROM ubuntu
+ENV TZ=Europe/Oslo
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+#COPY 9.8 /var/www/html/9.8/
+
+
+
+#postfix own docker image
+#Mysql own docker image
+RUN apt-get update
+RUN apt-get install -y \
+ imagemagick \
+ apache2 \
+ inkscape \ 
+ subversion \ 
+ mysql-client
+RUN apt-get install -y  \
+ ghostscript \ 
+ antiword \ 
+ libimage-exiftool-perl \ 
+ cron \
+ wget 
+RUN  apt-get install  -y \ 
+ php \
+ php-dev \ 
+ php-gd \ 
+ php-mysql \ 
+ php-mbstring \ 
+ php-zip \ 
+ php-intl \ 
+ php-curl \ 
+ php-cli \
+ php-apcu \ 
+ php-json \
+ php-mysqli \
+ php-xml\
+ php-ldap \
+ php-imap \
+ libapache2-mod-php \ 
+ ffmpeg poppler-utils
+
+RUN a2dismod --force autoindex
+
+#RUN chmod 777 /var/www/html/10.0/languages/
+WORKDIR /var/www/html/
+
+RUN mkdir resourcespace
+RUN svn co https://svn.resourcespace.com/svn/rs/releases/10.0 ./resourcespace
+
+RUN mkdir /var/www/html/resourcespace/filestore
+RUN chmod  777 ./resourcespace/filestore -R
+RUN chmod 777 ./resourcespace/include/ -R
+
+COPY php.ini /etc/php/8.1/apache2/php.ini
+#COPY apache2.conf /etc/apache2/
+EXPOSE 80
+
+CMD ["/usr/sbin/apache2ctl", "-DFOREGROUND"]
+
+#ned to set after setup is done
+
+#RUN  chmod -R 750 /var/www/html/10.0/include#
+#RUN  chgrp -R www-data /var/www/html/resourcespace#
