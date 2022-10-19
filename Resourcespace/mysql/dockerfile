@@ -11,6 +11,3 @@ COPY 02createuser-rw.sql /docker-entrypoint-initdb.d
 COPY 03grant.sql /docker-entrypoint-initdb.d
 
 EXPOSE 3306
-
-#RUN mysql -u root -password +TopS3cret!forF4en <  /var/www/createdb.sql
-#RUN mysql -u root -password +TopS3cret!forF4en <  /var/www/createusers.sql
