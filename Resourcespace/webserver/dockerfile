@@ -1,9 +1,6 @@
 FROM ubuntu:20.04
 ENV TZ=Europe/Oslo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-#COPY 9.8 /var/www/html/9.8/
-
-
 
 #postfix own docker image
 #Mysql own docker image
@@ -41,7 +38,7 @@ RUN  apt-get install  -y \
 
 RUN a2dismod --force autoindex
 
-#RUN chmod 777 /var/www/html/10.0/languages/
+
 WORKDIR /var/www/html/
 
 RUN mkdir resourcespace
